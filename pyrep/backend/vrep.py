@@ -75,6 +75,12 @@ def simGetObjectHandle(objectName):
         raise RuntimeError('Handle %s does not exist.' % objectName)
     return handle
 
+def simGetScriptHandle(scriptName):
+    handle = lib.simGetScriptHandle(scriptName.encode('ascii'))
+    if handle <= 0:
+        raise RuntimeError('Handle %s does not exist.' % scriptName)
+    return handle
+
 
 def simGetIkGroupHandle(ikGroupName):
     handle = lib.simGetIkGroupHandle(ikGroupName.encode('ascii'))
@@ -1022,3 +1028,26 @@ def simUngroupShape(shapeHandle):
     handles = [shapes[i] for i in range(count[0])]
     # simReleaseBuffer(shapes)
     return handles
+
+
+def simSetScriptSimulationParameter(scriptHandle, parameterName, parameterValue):
+    flag = lib.simSetScriptSimulationParameter(scriptHandle, parameterName.encode('ascii'), ('%f'%parameterValue).encode('ascii'), len(str(parameterValue)))
+    return flag
+
+def simGetVelocity(shapeHandle):
+    linearVel = ffi.new('float[3]')
+    angularVel = ffi.new('float[3]')
+    ret = lib.simGetVelocity(shapeHandle, linearVel, angularVel)
+    _check_return(ret)
+    return list(linearVel), list(angularVel)
+
+def simGetObjectVelocity(objectHandle):
+    linearVel = ffi.new('float[3]')
+    angularVel = ffi.new('float[3]')
+    ret = lib.simGetObjectVelocity(objectHandle, linearVel, angularVel)
+    _check_return(ret)
+    return list(linearVel), list(angularVel)
+
+def simGetObjectAssociatedWithScript(scriptHandle):
+    return lib.simGetObjectAssociatedWithScript(scriptHandle)
+

@@ -41,6 +41,8 @@ class MobileBase(RobotComponent):
         self._collision_collection = vrep.simGetCollectionHandle(
             '%s_base%s' % (name, suffix))
 
+        print(self._collision_collection)
+
         # Robot parameters and handle
         self.z_pos = self.get_position()[2]
         self.target_z = self.target_base.get_position()[-1]
