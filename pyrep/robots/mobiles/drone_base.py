@@ -68,7 +68,12 @@ class DroneBase(RobotComponent):
         self.z_pos = self.get_position()[2]
         self.target_z = self.target_base.get_position()[-1]
 
-    def get_propeller_handles(self, propeller_names):
+    def get_propeller_handles(self, propeller_names: List[str]):
+        """ Gets handles of propellers according to their names. 
+
+        :param: A List containing the names of propellers (str).
+        :return: A List containing the handles of propellers.
+        """
         propellers=[]  # get handles of propellers
         for i in range(self.num_propellers):
             propellers.append(vrep.simGetScriptHandle(propeller_names[i]))
@@ -80,9 +85,11 @@ class DroneBase(RobotComponent):
     def get_cartesian_position(self):
         return self.get_position()
 
-    # def get_orientation(self):
+    def set_propeller_velocities(self, velocities: List[float]):
+        """ Sets the particle velocities of propellers.
 
-    def set_propeller_velocities(self, velocities):
+        :param velocities: A List containing the particle velocities for propellers.
+        """
         for j in range(self.num_propellers):
             vrep.simSetScriptSimulationParameter(self.propellers[j],'particleVelocity',velocities[j])
 
@@ -340,7 +347,12 @@ class DroneBase(RobotComponent):
         return [thrust, alphaCorr, betaCorr, rotCorr], False
 
 
-    def set_base_angular_velocites(self, params: List[float]):  # should be set_base_particle_velocites
+    def set_base_angular_velocites(self, params: List[float]): 
+        """Calls required functions to achieve desired omnidirectional effect.
+        The name should be changed to be set_base_particle_velocites!
+
+        :param params: A List with thrust and three factors for moving. 
+        """
         assert self.num_propellers == 4
         particlesTargetVelocities = [0,0,0,0]
         thrust = params[0]
