@@ -14,7 +14,7 @@ robotics experimentation platform ([V-REP](http://www.coppeliarobotics.com/)).__
 - [Projects Using PyRep](#projects-using-pyrep)
 - [Citation](#citation)
 
-
+## For V-REP 3.6.2
 ## Install
 
 In addition to the PyRep API, you will aso need to download the latest version of V-REP [from the downloads page](http://www.coppeliarobotics.com/downloads.html).
